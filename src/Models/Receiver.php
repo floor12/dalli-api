@@ -19,7 +19,7 @@ class Receiver extends XmlObject
     protected $time_min;
     /** @var string */
     protected $time_max;
-    /** @var int */
+    /** @var string */
     protected $zipcode;
 
     /**
@@ -156,19 +156,19 @@ class Receiver extends XmlObject
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getZipcode(): int
+    public function getZipcode(): string
     {
         return $this->zipcode;
     }
 
     /**
-     * @param int $zipcode
+     * @param string $zipcode
      * @return Receiver
      * @return Receiver
      */
-    public function setZipcode(int $zipcode)
+    public function setZipcode(string $zipcode)
     {
         $this->zipcode = $zipcode;
         return $this;

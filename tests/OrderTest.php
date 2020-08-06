@@ -42,7 +42,7 @@ class OrderTest extends TestCase
         $this->assertContains('<receiver>', $resultXml);
         $this->assertContains('<address>', $resultXml);
 
-        var_dump($resultXml);
+//        var_dump($resultXml);
 
     }
 
