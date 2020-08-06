@@ -27,11 +27,11 @@ class ItemTest extends TestCase
 
         $resultXml = html_entity_decode($item->getAsXmlString());
         $this->assertContains('<item', $resultXml);
-        $this->assertContains("quantity=\"{$quantity}\"", $resultXml);
-        $this->assertContains("mass=\"{$mass}\"", $resultXml);
-        $this->assertContains("retprice=\"{$retprice}\"", $resultXml);
-        $this->assertContains("barcode=\"{$barcode}\"", $resultXml);
-        $this->assertContains("article=\"{$article}\"", $resultXml);
+        $this->assertContains(" quantity=\"{$quantity}\"", $resultXml);
+        $this->assertContains(" mass=\"{$mass}\"", $resultXml);
+        $this->assertContains(" retprice=\"{$retprice}\"", $resultXml);
+        $this->assertContains(" barcode=\"{$barcode}\"", $resultXml);
+        $this->assertContains(" article=\"{$article}\"", $resultXml);
     }
 
     public function testXml()
