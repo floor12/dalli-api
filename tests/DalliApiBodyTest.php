@@ -51,12 +51,12 @@ class DalliApiBodyTest extends TestCase
         $apiBody->add($order);
 
         $resultXml = html_entity_decode($apiBody->getAsXmlString());
-        $this->assertContains("<{$testMethodName}>", $resultXml);
-        $this->assertContains("<auth token=\"{$authToken}\"/>", $resultXml);
-        $this->assertContains("<order number=\"{$intTestValue}\">", $resultXml);
-        $this->assertContains("<receiver>", $resultXml);
-        $this->assertContains("<items>", $resultXml);
-        $this->assertContains("<item ", $resultXml);
-        $this->assertContains("<below ", $resultXml);
+        $this->assertStringContainsString("<{$testMethodName}>", $resultXml);
+        $this->assertStringContainsString("<auth token=\"{$authToken}\"/>", $resultXml);
+        $this->assertStringContainsString("<order number=\"{$intTestValue}\">", $resultXml);
+        $this->assertStringContainsString("<receiver>", $resultXml);
+        $this->assertStringContainsString("<items>", $resultXml);
+        $this->assertStringContainsString("<item ", $resultXml);
+        $this->assertStringContainsString("<below ", $resultXml);
     }
 }

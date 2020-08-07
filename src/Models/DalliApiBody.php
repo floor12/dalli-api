@@ -26,6 +26,11 @@ class DalliApiBody extends BaseXmlObject
         $auth->addAttribute('token', $this->authToken);
     }
 
+    /**
+     * @param BaseXmlObject $object
+     * @return $this
+     * @throws ReflectionException
+     */
     public function add(BaseXmlObject $object): self
     {
         $className = mb_strtolower((new ReflectionClass($object))->getShortName());
@@ -39,30 +44,9 @@ class DalliApiBody extends BaseXmlObject
     /**
      * @param BaseXmlObject|null $object
      * @return string
-     * @throws ReflectionException
      */
     public function getAsXmlString(BaseXmlObject $object = null): string
     {
         return $this->mainElement->asXML();
-    }
-
-    /**
-     * @param string $authToken
-     * @return self
-     */
-    public function setAuthToken(string $authToken): self
-    {
-        $this->authToken = $authToken;
-        return $this;
-    }
-
-    /**
-     * @param string $apiMethodName
-     * @return self
-     */
-    public function setApiMethodName(string $apiMethodName): self
-    {
-        $this->apiMethodName = $apiMethodName;
-        return $this;
     }
 }

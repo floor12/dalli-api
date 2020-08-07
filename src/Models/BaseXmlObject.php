@@ -73,19 +73,21 @@ abstract class BaseXmlObject
     }
 
     /**
-     * @param $mainElement
+     * @param SimpleXMLElement $mainElement
      * @param $attributeName
      * @param $attributeValue
-     * @return null
+     * @return void
      */
-    protected function addValueAsString($mainElement, $attributeName, $attributeValue)
+    protected function addValueAsString(SimpleXMLElement $mainElement, $attributeName, $attributeValue):void
     {
         if (empty($attributeValue))
-            return null;
-        if (substr($attributeName, 0, 1) === '_') {
-            return $mainElement->addAttribute(substr($attributeName, 1), $attributeValue);
+            return;
+        if ($attributeName === 'title') {
+            $mainElement[0]=$attributeValue;
+        } elseif (substr($attributeName, 0, 1) === '_') {
+             $mainElement->addAttribute(substr($attributeName, 1), $attributeValue);
         } else {
-            return $mainElement->addChild($attributeName, $attributeValue);
+             $mainElement->addChild($attributeName, $attributeValue);
         }
     }
 

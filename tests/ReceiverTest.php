@@ -34,14 +34,14 @@ class ReceiverTest extends TestCase
 
         $resultXml = html_entity_decode($receiver->getAsXmlString());
 
-        $this->assertContains('<receiver>', $resultXml);
-        $this->assertContains("<person>$name</person>", $resultXml);
-        $this->assertContains("<address>$address</address>", $resultXml);
-        $this->assertContains("<date>$date</date>", $resultXml);
-        $this->assertContains("<zipcode>$zipcode</zipcode>", $resultXml);
-        $this->assertContains("<phone>$phone</phone>", $resultXml);
-        $this->assertContains("<town>$town</town>", $resultXml);
-        $this->assertContains("<time_max>$timeMax</time_max>", $resultXml);
-        $this->assertContains("<time_min>$timeMin</time_min>", $resultXml);
+        $this->assertStringContainsString('<receiver>', $resultXml);
+        $this->assertStringContainsString("<person>$name</person>", $resultXml);
+        $this->assertStringContainsString("<address>$address</address>", $resultXml);
+        $this->assertStringContainsString("<date>$date</date>", $resultXml);
+        $this->assertStringContainsString("<zipcode>$zipcode</zipcode>", $resultXml);
+        $this->assertStringContainsString("<phone>$phone</phone>", $resultXml);
+        $this->assertStringContainsString("<town>$town</town>", $resultXml);
+        $this->assertStringContainsString("<time_max>$timeMax</time_max>", $resultXml);
+        $this->assertStringContainsString("<time_min>$timeMin</time_min>", $resultXml);
     }
 }

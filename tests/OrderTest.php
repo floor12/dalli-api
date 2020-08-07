@@ -65,13 +65,13 @@ class OrderTest extends TestCase
             ->addItem($item);
 
         $resultXml = html_entity_decode($order->getAsXmlString());
-        $this->assertContains('<order', $resultXml);
-        $this->assertContains('<items>', $resultXml);
-        $this->assertContains('<deliveryset>', $resultXml);
-        $this->assertContains("<item quantity=\"1\" barcode=\"{$barcode}\"/>", $resultXml);
-        $this->assertContains("<below price=\"{$intTestValue}\"/>", $resultXml);
-        $this->assertContains('<receiver>', $resultXml);
-        $this->assertContains('<address>', $resultXml);
+        $this->assertStringContainsString('<order', $resultXml);
+        $this->assertStringContainsString('<items>', $resultXml);
+        $this->assertStringContainsString('<deliveryset>', $resultXml);
+        $this->assertStringContainsString("<item quantity=\"1\" barcode=\"{$barcode}\"/>", $resultXml);
+        $this->assertStringContainsString("<below price=\"{$intTestValue}\"/>", $resultXml);
+        $this->assertStringContainsString('<receiver>', $resultXml);
+        $this->assertStringContainsString('<address>', $resultXml);
     }
 
 

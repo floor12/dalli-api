@@ -19,12 +19,12 @@ class BelowTest extends TestCase
             ->setReturnPrice($testValue);
 
         $resultXml = html_entity_decode($below->getAsXmlString());
-        $this->assertContains('<below', $resultXml);
-        $this->assertContains("above_price=\"{$testValue}\"", $resultXml);
-        $this->assertContains("return_price=\"{$testValue}\"", $resultXml);
-        $this->assertContains("below=\"{$testValue}\"", $resultXml);
-        $this->assertContains("below_sum=\"{$testValue}\"", $resultXml);
-        $this->assertContains("price=\"{$testValue}\"", $resultXml);
+        $this->assertStringContainsString('<below', $resultXml);
+        $this->assertStringContainsString("above_price=\"{$testValue}\"", $resultXml);
+        $this->assertStringContainsString("return_price=\"{$testValue}\"", $resultXml);
+        $this->assertStringContainsString("below=\"{$testValue}\"", $resultXml);
+        $this->assertStringContainsString("below_sum=\"{$testValue}\"", $resultXml);
+        $this->assertStringContainsString("price=\"{$testValue}\"", $resultXml);
     }
 
     public function testXmlFewFields()
@@ -36,11 +36,11 @@ class BelowTest extends TestCase
             ->setBelow($testValue);
 
         $resultXml = html_entity_decode($below->getAsXmlString());
-        $this->assertContains('<below', $resultXml);
-        $this->assertContains(" below=\"{$testValue}\"", $resultXml);
-        $this->assertContains(" above_price=\"{$testValue}\"", $resultXml);
-        $this->assertNotContains(" return_price=\"{$testValue}\"", $resultXml);
-        $this->assertNotContains(" below_sum=\"{$testValue}\"", $resultXml);
-        $this->assertNotContains(" price=\"{$testValue}\"", $resultXml);
+        $this->assertStringContainsString('<below', $resultXml);
+        $this->assertStringContainsString(" below=\"{$testValue}\"", $resultXml);
+        $this->assertStringContainsString(" above_price=\"{$testValue}\"", $resultXml);
+        $this->assertStringNotContainsString(" return_price=\"{$testValue}\"", $resultXml);
+        $this->assertStringNotContainsString(" below_sum=\"{$testValue}\"", $resultXml);
+        $this->assertStringNotContainsString(" price=\"{$testValue}\"", $resultXml);
     }
 }

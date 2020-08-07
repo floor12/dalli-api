@@ -11,48 +11,50 @@ class ItemTest extends TestCase
     public function testXmlAllFields()
     {
         $quantity = rand(1, 10);
-        $mass = rand(1, 10);
+        $weight = rand(1, 10);
         $retprice = rand(1, 10);
         $barcode = rand(1, 10);
         $article = rand(1, 10);
-
+        $title = 'Кросовки';
 
         $item = new Item();
         $item
+            ->setTitle($title)
             ->setArticle($article)
             ->setBarcode($barcode)
-            ->setMass($mass)
+            ->setweight($weight)
             ->setQuantity($quantity)
             ->setRetprice($retprice);
 
         $resultXml = html_entity_decode($item->getAsXmlString());
-        $this->assertContains('<item', $resultXml);
-        $this->assertContains(" quantity=\"{$quantity}\"", $resultXml);
-        $this->assertContains(" mass=\"{$mass}\"", $resultXml);
-        $this->assertContains(" retprice=\"{$retprice}\"", $resultXml);
-        $this->assertContains(" barcode=\"{$barcode}\"", $resultXml);
-        $this->assertContains(" article=\"{$article}\"", $resultXml);
+        $this->assertStringContainsString('<item', $resultXml);
+        $this->assertStringContainsString(" quantity=\"{$quantity}\"", $resultXml);
+        $this->assertStringContainsString(" weight=\"{$weight}\"", $resultXml);
+        $this->assertStringContainsString(" retprice=\"{$retprice}\"", $resultXml);
+        $this->assertStringContainsString(" barcode=\"{$barcode}\"", $resultXml);
+        $this->assertStringContainsString(" article=\"{$article}\"", $resultXml);
+        $this->assertStringContainsString(">{$title}<", $resultXml);
     }
 
     public function testXml()
     {
         $quantity = rand(1, 10);
-        $mass = rand(1, 10);
+        $weight = rand(1, 10);
         $retprice = rand(1, 10);
 
 
         $item = new Item();
         $item
-            ->setMass($mass)
+            ->setweight($weight)
             ->setQuantity($quantity)
             ->setRetprice($retprice);
 
         $resultXml = html_entity_decode($item->getAsXmlString());
-        $this->assertContains('<item', $resultXml);
-        $this->assertContains("quantity=\"{$quantity}\"", $resultXml);
-        $this->assertContains("mass=\"{$mass}\"", $resultXml);
-        $this->assertContains("retprice=\"{$retprice}\"", $resultXml);
-        $this->assertNotContains("barcode", $resultXml);
-        $this->assertNotContains("article", $resultXml);
+        $this->assertStringContainsString('<item', $resultXml);
+        $this->assertStringContainsString("quantity=\"{$quantity}\"", $resultXml);
+        $this->assertStringContainsString("weight=\"{$weight}\"", $resultXml);
+        $this->assertStringContainsString("retprice=\"{$retprice}\"", $resultXml);
+        $this->assertStringNotContainsString("barcode", $resultXml);
+        $this->assertStringNotContainsString("article", $resultXml);
     }
 }

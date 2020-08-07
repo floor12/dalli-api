@@ -6,10 +6,12 @@ namespace floor12\DalliApi\Models;
 
 class Item extends BaseXmlObject
 {
+    /** @var string */
+    public $title;
     /** @var int */
     public $_quantity = 1;
     /** @var int */
-    public $_mass;
+    public $_weight;
     /** @var int */
     public $_retprice;
     /** @var int */
@@ -29,13 +31,13 @@ class Item extends BaseXmlObject
     }
 
     /**
-     * @param int $_mass
+     * @param int $_weight
      * @return Item
      * @return Item
      */
-    public function setMass(int $_mass)
+    public function setweight(int $_weight)
     {
-        $this->_mass = $_mass;
+        $this->_weight = $_weight;
         return $this;
     }
 
@@ -69,6 +71,16 @@ class Item extends BaseXmlObject
     public function setArticle(string $_article)
     {
         $this->_article = $_article;
+        return $this;
+    }
+
+    /**
+     * @param string $title
+     * @return self
+     */
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
         return $this;
     }
 }
