@@ -80,9 +80,9 @@ class Receiver extends XmlObject
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getPhone(): int
+    public function getPhone(): string
     {
         return $this->phone;
     }
