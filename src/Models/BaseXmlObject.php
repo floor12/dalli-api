@@ -17,8 +17,9 @@ abstract class BaseXmlObject
      */
     public function getAsXmlObject(BaseXmlObject $object = null): SimpleXMLElement
     {
-        if (empty($object))
+        if (empty($object)) {
             $object = $this;
+        }
         $className = mb_strtolower((new ReflectionClass($object))->getShortName());
         $mainElement = new SimpleXMLElement("<$className></$className>");
         foreach ($object as $attributeName => $attributeValue) {
@@ -78,16 +79,16 @@ abstract class BaseXmlObject
      * @param $attributeValue
      * @return void
      */
-    protected function addValueAsString(SimpleXMLElement $mainElement, $attributeName, $attributeValue):void
+    protected function addValueAsString(SimpleXMLElement $mainElement, $attributeName, $attributeValue): void
     {
         if (empty($attributeValue))
             return;
         if ($attributeName === 'title') {
-            $mainElement[0]=$attributeValue;
+            $mainElement[0] = $attributeValue;
         } elseif (substr($attributeName, 0, 1) === '_') {
-             $mainElement->addAttribute(substr($attributeName, 1), $attributeValue);
+            $mainElement->addAttribute(substr($attributeName, 1), $attributeValue);
         } else {
-             $mainElement->addChild($attributeName, $attributeValue);
+            $mainElement->addChild($attributeName, $attributeValue);
         }
     }
 
