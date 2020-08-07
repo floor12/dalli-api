@@ -50,7 +50,7 @@ class OrderTest extends TestCase
 
         $order = new Order();
 
-        $order->setOrderno(123)
+        $order->setNumber(123)
             ->setReceiver($receiver)
             ->setService(DalliService::EXPRESS_PICKUP)
             ->setWeight($intTestValue)
@@ -65,7 +65,7 @@ class OrderTest extends TestCase
             ->addItem($item);
 
         $resultXml = html_entity_decode($order->getAsXmlString());
-        $this->assertContains('<order>', $resultXml);
+        $this->assertContains('<order', $resultXml);
         $this->assertContains('<items>', $resultXml);
         $this->assertContains('<deliveryset>', $resultXml);
         $this->assertContains("<item quantity=\"1\" barcode=\"{$barcode}\"/>", $resultXml);

@@ -4,26 +4,18 @@
 namespace floor12\DalliApi\Models;
 
 
-class Below extends XmlObject
+class Below extends BaseXmlObject
 {
     /** @var float */
-    protected $_above_price;
+    public $_above_price;
     /** @var float */
-    protected $_return_price;
+    public $_return_price;
     /** @var int */
-    protected $_below;
+    public $_below;
     /** @var float */
-    protected $_below_sum;
+    public $_below_sum;
     /** @var float */
-    protected $_price;
-
-    /**
-     * @return float
-     */
-    public function getAbovePrice(): float
-    {
-        return $this->_above_price;
-    }
+    public $_price;
 
     /**
      * @param float $above_price
@@ -34,14 +26,6 @@ class Below extends XmlObject
     {
         $this->_above_price = $above_price;
         return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getReturnPrice(): float
-    {
-        return $this->_return_price;
     }
 
     /**
@@ -56,14 +40,6 @@ class Below extends XmlObject
     }
 
     /**
-     * @return int
-     */
-    public function getBelow(): int
-    {
-        return $this->_below;
-    }
-
-    /**
      * @param int $below
      * @return Below
      * @return Below
@@ -75,14 +51,6 @@ class Below extends XmlObject
     }
 
     /**
-     * @return float
-     */
-    public function getBelowSum(): float
-    {
-        return $this->_below_sum;
-    }
-
-    /**
      * @param float $below_sum
      * @return Below
      * @return Below
@@ -91,14 +59,6 @@ class Below extends XmlObject
     {
         $this->_below_sum = $below_sum;
         return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getPrice(): float
-    {
-        return $this->_price;
     }
 
     /**

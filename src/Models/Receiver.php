@@ -3,32 +3,24 @@
 namespace floor12\DalliApi\Models;
 
 
-class Receiver extends XmlObject
+class Receiver extends BaseXmlObject
 {
     /** @var string */
-    protected $town;
+    public $town;
     /** @var string */
-    protected $address;
+    public $address;
     /** @var string */
-    protected $person;
+    public $person;
     /** @var string */
-    protected $phone;
+    public $phone;
     /** @var string */
-    protected $date;
+    public $date;
     /** @var string */
-    protected $time_min;
+    public $time_min;
     /** @var string */
-    protected $time_max;
+    public $time_max;
     /** @var string */
-    protected $zipcode;
-
-    /**
-     * @return string
-     */
-    public function getTown(): string
-    {
-        return $this->town;
-    }
+    public $zipcode;
 
     /**
      * @param string $town
@@ -39,14 +31,6 @@ class Receiver extends XmlObject
     {
         $this->town = $town;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAddress(): string
-    {
-        return $this->address;
     }
 
     /**
@@ -61,14 +45,6 @@ class Receiver extends XmlObject
     }
 
     /**
-     * @return string
-     */
-    public function getPerson(): string
-    {
-        return $this->person;
-    }
-
-    /**
      * @param string $person
      * @return Receiver
      * @return Receiver
@@ -77,14 +53,6 @@ class Receiver extends XmlObject
     {
         $this->person = $person;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhone(): string
-    {
-        return $this->phone;
     }
 
     /**
@@ -99,14 +67,6 @@ class Receiver extends XmlObject
     }
 
     /**
-     * @return string
-     */
-    public function getDate(): string
-    {
-        return $this->date;
-    }
-
-    /**
      * @param string $date
      * @return Receiver
      * @return Receiver
@@ -115,14 +75,6 @@ class Receiver extends XmlObject
     {
         $this->date = $date;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTimeMin(): string
-    {
-        return $this->time_min;
     }
 
     /**
@@ -137,14 +89,6 @@ class Receiver extends XmlObject
     }
 
     /**
-     * @return string
-     */
-    public function getTimeMax(): string
-    {
-        return $this->time_max;
-    }
-
-    /**
      * @param string $time_max
      * @return Receiver
      * @return Receiver
@@ -153,14 +97,6 @@ class Receiver extends XmlObject
     {
         $this->time_max = $time_max;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getZipcode(): string
-    {
-        return $this->zipcode;
     }
 
     /**

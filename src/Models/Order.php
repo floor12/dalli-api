@@ -4,42 +4,34 @@
 namespace floor12\DalliApi\Models;
 
 
-class Order extends XmlObject
+class Order extends BaseXmlObject
 {
     /** @var int */
-    protected $orderno;
+    public $_number;
     /** @var Receiver */
-    protected $receiver;
+    public $receiver;
     /** @var int */
-    protected $service;
+    public $service;
     /** @var float */
-    protected $weight;
+    public $weight;
     /** @var int */
-    protected $quantity;
+    public $quantity;
     /** @var string */
-    protected $paytype;
+    public $paytype;
     /** @var float */
-    protected $price;
+    public $price;
     /** @var float */
-    protected $priced;
+    public $priced;
     /** @var float */
-    protected $inshprice;
+    public $inshprice;
     /** @var string */
-    protected $upsnak;
+    public $upsnak;
     /** @var string */
-    protected $instruction;
+    public $instruction;
     /** @var array */
-    protected $deliveryset = [];
+    public $deliveryset = [];
     /** @var array */
-    protected $items = [];
-
-    /**
-     * @return mixed
-     */
-    public function getReceiver()
-    {
-        return $this->receiver;
-    }
+    public $items = [];
 
     /**
      * @param mixed $receiver
@@ -50,14 +42,6 @@ class Order extends XmlObject
     {
         $this->receiver = $receiver;
         return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getService(): int
-    {
-        return $this->service;
     }
 
     /**
@@ -72,14 +56,6 @@ class Order extends XmlObject
     }
 
     /**
-     * @return float
-     */
-    public function getWeight(): float
-    {
-        return $this->weight;
-    }
-
-    /**
      * @param float $weight
      * @return Order
      * @return Order
@@ -88,14 +64,6 @@ class Order extends XmlObject
     {
         $this->weight = $weight;
         return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getQuantity(): int
-    {
-        return $this->quantity;
     }
 
     /**
@@ -110,14 +78,6 @@ class Order extends XmlObject
     }
 
     /**
-     * @return string
-     */
-    public function getPaytype(): string
-    {
-        return $this->paytype;
-    }
-
-    /**
      * @param string $paytype
      * @return Order
      * @return Order
@@ -126,14 +86,6 @@ class Order extends XmlObject
     {
         $this->paytype = $paytype;
         return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getPrice(): float
-    {
-        return $this->price;
     }
 
     /**
@@ -148,14 +100,6 @@ class Order extends XmlObject
     }
 
     /**
-     * @return float
-     */
-    public function getPriced(): float
-    {
-        return $this->priced;
-    }
-
-    /**
      * @param float $priced
      * @return Order
      * @return Order
@@ -164,14 +108,6 @@ class Order extends XmlObject
     {
         $this->priced = $priced;
         return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getInshprice(): float
-    {
-        return $this->inshprice;
     }
 
     /**
@@ -186,14 +122,6 @@ class Order extends XmlObject
     }
 
     /**
-     * @return string
-     */
-    public function getUpsnak(): string
-    {
-        return $this->upsnak;
-    }
-
-    /**
      * @param string $upsnak
      * @return Order
      * @return Order
@@ -205,14 +133,6 @@ class Order extends XmlObject
     }
 
     /**
-     * @return string
-     */
-    public function getInstruction(): string
-    {
-        return $this->instruction;
-    }
-
-    /**
      * @param string $instruction
      * @return Order
      * @return Order
@@ -221,14 +141,6 @@ class Order extends XmlObject
     {
         $this->instruction = $instruction;
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getDeliveryset(): array
-    {
-        return $this->deliveryset;
     }
 
     /**
@@ -250,14 +162,6 @@ class Order extends XmlObject
     {
         $this->deliveryset[] = $below;
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getItems(): array
-    {
-        return $this->items;
     }
 
     /**
@@ -283,21 +187,13 @@ class Order extends XmlObject
     }
 
     /**
-     * @return int
-     */
-    public function getOrderno(): int
-    {
-        return $this->orderno;
-    }
-
-    /**
-     * @param int $orderno
+     * @param int $_number
      * @return Order
      * @return Order
      */
-    public function setOrderno(int $orderno): self
+    public function setNumber(int $_number): self
     {
-        $this->orderno = $orderno;
+        $this->_number = $_number;
         return $this;
     }
 

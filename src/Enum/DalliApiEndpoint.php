@@ -1,7 +1,7 @@
 <?php
 
 
-namespace floor12\DalliApi;
+namespace floor12\DalliApi\Enum;
 
 
 class DalliApiEndpoint

@@ -8,18 +8,20 @@ use ReflectionClass;
 use ReflectionException;
 use SimpleXMLElement;
 
-abstract class XmlObject
+abstract class BaseXmlObject
 {
-
     /**
+     * @param BaseXmlObject $object
      * @return SimpleXMLElement
      * @throws ReflectionException
      */
-    public function getAsXmlObject(): SimpleXMLElement
+    public function getAsXmlObject(BaseXmlObject $object = null): SimpleXMLElement
     {
-        $className = mb_strtolower((new ReflectionClass($this))->getShortName());
+        if (empty($object))
+            $object = $this;
+        $className = mb_strtolower((new ReflectionClass($object))->getShortName());
         $mainElement = new SimpleXMLElement("<$className></$className>");
-        foreach ($this as $attributeName => $attributeValue) {
+        foreach ($object as $attributeName => $attributeValue) {
             $this->processAttributeNameAndValue($mainElement, $attributeName, $attributeValue);
         }
         return $mainElement;
@@ -88,11 +90,12 @@ abstract class XmlObject
     }
 
     /**
+     * @param BaseXmlObject|null $object
      * @return string
      * @throws ReflectionException
      */
-    public function getAsXmlString(): string
+    public function getAsXmlString(BaseXmlObject $object = null): string
     {
-        return $this->getAsXmlObject()->asXML();
+        return $this->getAsXmlObject($object)->asXML();
     }
 }
