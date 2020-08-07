@@ -53,6 +53,9 @@ $order->addItem($item2);
 
 $apiBody->add($order);
 
-if (!$dalliClient->sendApiRequest($apiBody->getAsXmlString()))
+$success = !$dalliClient->sendApiRequest($apiBody->getAsXmlString());
+if (!$success)
     foreach ($dalliClient->getErrors() as $error)
         echo $error;
+
+echo $dalliClient->getResponseBody();

@@ -22,6 +22,8 @@ class DalliClient
     private $errors = [];
     /** @var ResponseInterface */
     private $response;
+    /** @var string */
+    private $responseBody;
 
     /**
      * DalliClient constructor.
@@ -40,7 +42,7 @@ class DalliClient
     private function parseErrors(): bool
     {
         $pattern = '/errorMessage=\'(.+)\'/';
-        if (preg_match_all($pattern, $this->response->getBody()->getContents(), $matches)) {
+        if (preg_match_all($pattern, $this->responseBody, $matches)) {
             $this->errors = $matches[1];
             return false;
         }
@@ -57,11 +59,20 @@ class DalliClient
         $headers = ['Content-type' => 'application/xml'];
         $request = new Request('POST', $this->dalliEndpoint, $headers, $body);
         $this->response = $this->client->send($request);
+        $this->responseBody = $this->response->getBody()->getContents();
         return $this->parseErrors();
     }
 
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponseBody(): string
+    {
+        return $this->responseBody;
     }
 }

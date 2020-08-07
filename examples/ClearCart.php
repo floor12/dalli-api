@@ -7,9 +7,13 @@ use floor12\DalliApi\Models\DalliApiBody;
 
 $dalliClient = new DalliClient(DalliApiEndpoint::SPB);
 
-$token = '<ваш token>';
+$token = '';
 $apiBody = new DalliApiBody(DalliApiMethod::BASKET_CLEAR, $token);
 
-if (!$dalliClient->sendApiRequest($apiBody->getAsXmlString()))
+$success = $dalliClient->sendApiRequest($apiBody->getAsXmlString());
+
+if (!$success)
     foreach ($dalliClient->getErrors() as $error)
         echo $error;
+
+echo $dalliClient->getResponseBody();
