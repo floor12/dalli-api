@@ -17,6 +17,10 @@ class DalliClient
      * @var string
      */
     private $dalliEndpoint;
+    /** @var array */
+    private $errors = [];
+    /** @var ResponseInterface */
+    private $response;
 
     /**
      * DalliClient constructor.
@@ -30,14 +34,33 @@ class DalliClient
     }
 
     /**
+     * @return bool
+     */
+    private function parseErrors(): bool
+    {
+        $pattern = '/errorMessage=\'(.+)\'/';
+        if (preg_match_all($pattern, $this->response->getBody()->getContents(), $matches)) {
+            $this->errors = $matches[1];
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * @param string $body Body as XML string
-     * @return ResponseInterface
+     * @return boolean
      * @throws GuzzleException
      */
-    public function sendApiRequest(string $body): ResponseInterface
+    public function sendApiRequest(string $body): bool
     {
         $headers = ['Content-type' => 'application/xml'];
         $request = new Request('POST', $this->dalliEndpoint, $headers, $body);
-        return $this->client->send($request);
+        $this->response = $this->client->send($request);
+        return $this->parseErrors();
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 }
