@@ -2,6 +2,7 @@
 
 namespace floor12\DalliApi;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
@@ -21,11 +22,11 @@ class DalliClient
     /**
      * DalliClient constructor.
      * @param string $dalliEndpoint
-     * @param ClientInterface $client
+     * @param ClientInterface|null $client
      */
-    public function __construct(string $dalliEndpoint, ClientInterface $client)
+    public function __construct(string $dalliEndpoint, ClientInterface $client = null)
     {
-        $this->client = $client;
+        $this->client = $client ?? new Client();
         $this->dalliEndpoint = $dalliEndpoint;
     }
 

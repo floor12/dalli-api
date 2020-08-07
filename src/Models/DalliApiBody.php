@@ -7,6 +7,7 @@ namespace floor12\DalliApi\Models;
 use ReflectionClass;
 use ReflectionException;
 use SimpleXMLElement;
+use yii\base\ErrorException;
 
 class DalliApiBody extends BaseXmlObject
 {
@@ -17,8 +18,14 @@ class DalliApiBody extends BaseXmlObject
     /** @var SimpleXMLElement */
     protected $mainElement;
 
-    public function __construct(string $apiMethodName, string $authToken)
+    public function __construct(?string $apiMethodName, ?string $authToken)
     {
+        if (empty($apiMethodName))
+            throw new ErrorException('Api method name is empty.');
+
+        if (empty($authToken))
+            throw new ErrorException('Auth token is empty.');
+        
         $this->apiMethodName = $apiMethodName;
         $this->authToken = $authToken;
         $this->mainElement = new SimpleXMLElement("<$this->apiMethodName></$this->apiMethodName>");
