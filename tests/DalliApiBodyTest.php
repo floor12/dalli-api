@@ -3,8 +3,11 @@
 namespace floor12\DalliApi\Tests;
 
 use Faker\Factory;
+use floor12\DalliApi\Enum\DalliApiMethod;
 use floor12\DalliApi\Enum\DalliService;
 use floor12\DalliApi\Enum\PayType;
+use floor12\DalliApi\Exceptions\EmptyApiMethodException;
+use floor12\DalliApi\Exceptions\EmptyTokenException;
 use floor12\DalliApi\Models\Below;
 use floor12\DalliApi\Models\DalliApiBody;
 use floor12\DalliApi\Models\Item;
@@ -14,6 +17,21 @@ use PHPUnit\Framework\TestCase;
 
 class DalliApiBodyTest extends TestCase
 {
+
+    public function testEmptyToken()
+    {
+        $this->expectException(EmptyTokenException::class);
+        $this->expectExceptionMessage('Dalli Service auth token is empty.');
+        new DalliApiBody(DalliApiMethod::BASKET_CLEAR, null);
+    }
+
+    public function testEmptyMethod()
+    {
+        $this->expectException(EmptyApiMethodException::class);
+        $this->expectExceptionMessage('Dalli Service API method name is empty.');
+        new DalliApiBody(null, null);
+    }
+
     public function testXmlAllFields()
     {
 
