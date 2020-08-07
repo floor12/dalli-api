@@ -79,8 +79,10 @@ $order->addItem($item1);
 $order->addItem($item2);
 
 $apiBody->add($this->dalliOrder);
-return $this->dalliClient->sendApiRequest($apiBody->getAsXmlString());
 
+if (!$dalliClient->sendApiRequest($apiBody->getAsXmlString()))
+    foreach ($dalliClient->getErrors() as $error)
+        echo $error;
 ```
 
 ### Очистка корзины
