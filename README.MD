@@ -33,7 +33,7 @@ $dalliClient = new DalliClient(DalliApiEndpoint::SPB, $token);
 
 use floor12\DalliApi\Enum\DalliService;
 use floor12\DalliApi\Models\Item;
-use floor12\DalliApi\Models\Order as DalliOrder;
+use floor12\DalliApi\Models\Order;
 use floor12\DalliApi\Models\Receiver;
 use floor12\DalliApi\Enum\DalliApiMethod;
 use floor12\DalliApi\Models\DalliApiBody;
@@ -55,7 +55,7 @@ $receiver = (new Receiver())
     ->setTimeMax('21:00')
     ->setPhone('79269392399');
 
-$order = (new DalliOrder())
+$order = (new Order())
     ->setNumber('AXC-12')
     ->setQuantity(1)
     ->setInshprice(1000)
