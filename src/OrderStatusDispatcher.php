@@ -31,7 +31,7 @@ class OrderStatusDispatcher
 
     private function dispatchOrderStatus(): void
     {
-        $pattern = '/<status eventtime="(.+)" createtimegmt="(.+)" title="(.+)">(.+)<\/status/';
+        $pattern = '/<status eventtime="(.+)" createtimegmt="(.+)" title="(.+)">(.+)<\/status>/';
         if (preg_match($pattern, $this->xmlBody, $matches)) {
             $this->statusId = $matches[4];
             $this->statusName = $matches[3];
