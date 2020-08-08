@@ -25,7 +25,6 @@ class DalliApiBodyTest extends TestCase
 
     public function testXmlAllFields()
     {
-
         $faker = Factory::create('ru_RU');
         $name = $faker->name;
         $address = $faker->streetAddress;
@@ -65,5 +64,20 @@ class DalliApiBodyTest extends TestCase
         $this->assertStringContainsString("<items>", $resultXml);
         $this->assertStringContainsString("<item ", $resultXml);
         $this->assertStringContainsString("<below ", $resultXml);
+    }
+
+
+    public function testAdditionalParams()
+    {
+        $paramName1 = 'param1';
+        $paramName2 = 'param2';
+        $paramValue1 = 'value1';
+        $testMethodName = 'testMethod1';
+        $apiBody = new DalliApiBody($testMethodName, [$paramName1 => [$paramName2 => $paramValue1]]);
+        $resultXml = html_entity_decode($apiBody->getAsXmlString());
+        var_dump($resultXml);
+        $this->assertStringContainsString("<{$paramName1}><{$paramName2}>{$paramValue1}</{$paramName2}></{$paramName1}>", $resultXml);
+
+
     }
 }
