@@ -96,7 +96,10 @@ class Item extends BaseXmlObject
         return $this;
     }
 
-    public function isReturned(): bool
+    /**
+     * @return bool|null
+     */
+    public function isReturned(): ?bool
     {
         return $this->_return;
     }

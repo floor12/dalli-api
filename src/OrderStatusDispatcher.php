@@ -16,7 +16,7 @@ class OrderStatusDispatcher
     private $statusName;
     /** @var string */
     private $statusId;
-    /** @var ?Item[] */
+    /** @var Item[] */
     protected $items = [];
 
     /**
@@ -43,7 +43,8 @@ class OrderStatusDispatcher
     {
         $pattern = '/<item.+barcode="(.+)" a.+returns="(\d)"/';
         if (preg_match_all($pattern, $this->xmlBody, $matches)) {
-            for ($i = 0; $i < sizeof($matches[0]); $i++) {
+            $itemsCount = sizeof($matches[0]);
+            for ($i = 0; $i < $itemsCount; $i++) {
                 $barcode = $matches[1][$i];
                 $return = boolval($matches[2][$i]);
                 $this->items[$barcode] = (new Item())
