@@ -3,11 +3,9 @@
 namespace floor12\DalliApi\Tests;
 
 use Faker\Factory;
-use floor12\DalliApi\Enum\DalliApiMethod;
 use floor12\DalliApi\Enum\DalliService;
 use floor12\DalliApi\Enum\PayType;
 use floor12\DalliApi\Exceptions\EmptyApiMethodException;
-use floor12\DalliApi\Exceptions\EmptyTokenException;
 use floor12\DalliApi\Models\Below;
 use floor12\DalliApi\Models\DalliApiBody;
 use floor12\DalliApi\Models\Item;
@@ -18,18 +16,11 @@ use PHPUnit\Framework\TestCase;
 class DalliApiBodyTest extends TestCase
 {
 
-    public function testEmptyToken()
-    {
-        $this->expectException(EmptyTokenException::class);
-        $this->expectExceptionMessage('Dalli Service auth token is empty.');
-        new DalliApiBody(DalliApiMethod::BASKET_CLEAR, null);
-    }
-
     public function testEmptyMethod()
     {
         $this->expectException(EmptyApiMethodException::class);
         $this->expectExceptionMessage('Dalli Service API method name is empty.');
-        new DalliApiBody(null, null);
+        new DalliApiBody(null);
     }
 
     public function testXmlAllFields()
@@ -63,14 +54,12 @@ class DalliApiBodyTest extends TestCase
             ->addItem($item);
 
         $testMethodName = 'testMethod1';
-        $authToken = 'dsfasdfawefwe';
-        $apiBody = (new DalliApiBody($testMethodName, $authToken));
+        $apiBody = (new DalliApiBody($testMethodName));
 
         $apiBody->add($order);
 
         $resultXml = html_entity_decode($apiBody->getAsXmlString());
         $this->assertStringContainsString("<{$testMethodName}>", $resultXml);
-        $this->assertStringContainsString("<auth token=\"{$authToken}\"/>", $resultXml);
         $this->assertStringContainsString("<order number=\"{$intTestValue}\">", $resultXml);
         $this->assertStringContainsString("<receiver>", $resultXml);
         $this->assertStringContainsString("<items>", $resultXml);

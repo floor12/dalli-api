@@ -13,7 +13,7 @@ $ composer require floor12/dalli-api
 ```
 или добавляем в секцию "required" файла composer.json
 ```json
-"floor12/dalli-api": "dev-master"
+"floor12/dalli-api":"dev-master"
 ```
 
 ## Инициализация
@@ -21,8 +21,8 @@ $ composer require floor12/dalli-api
 ```php
 use floor12\DalliApi\DalliClient;
 use floor12\DalliApi\Enum\DalliApiEndpoint;
-
-$dalliClient = new DalliClient(DalliApiEndpoint::SPB);
+$token = 'your_token';
+$dalliClient = new DalliClient(DalliApiEndpoint::SPB, $token);
 ```
 
 ## Примеры вызовов
@@ -37,9 +37,14 @@ use floor12\DalliApi\Models\Order as DalliOrder;
 use floor12\DalliApi\Models\Receiver;
 use floor12\DalliApi\Enum\DalliApiMethod;
 use floor12\DalliApi\Models\DalliApiBody;
+use floor12\DalliApi\DalliClient;
+use floor12\DalliApi\Enum\DalliApiEndpoint;
 
-$token = '<ваш token>';
-$apiBody = new DalliApiBody(DalliApiMethod::BASKET_CREATE, $token);
+
+$token = 'your_token';
+$dalliClient = new DalliClient(DalliApiEndpoint::SPB, $token);
+
+$apiBody = new DalliApiBody(DalliApiMethod::BASKET_CREATE);
 
 $receiver = (new Receiver())
     ->setPerson('Иванов Иван Иванович')
@@ -60,41 +65,52 @@ $order = (new DalliOrder())
 
 
 $item1 = (new Item())
-        ->setTitle('Юбка')
-        ->setArticle('F2D0001')
-        ->setQuantity(1)
-        ->setWeight(0.3)
-        ->setBarcode('460063453454')
-        ->setRetprice(500);
+    ->setTitle('Юбка')
+    ->setArticle('F2D0001')
+    ->setQuantity(1)
+    ->setWeight(0.3)
+    ->setBarcode('460063453454')
+    ->setRetprice(500);
 
 $item2 = (new Item())
-        ->setTitle('Кофта')
-        ->setArticle('F2D0001')
-        ->setQuantity(1)
-        ->setWeight(0.3)
-        ->setBarcode('460063453454')
-        ->setRetprice(500);
+    ->setTitle('Кофта')
+    ->setArticle('F2D0001')
+    ->setQuantity(1)
+    ->setWeight(0.3)
+    ->setBarcode('460063453454')
+    ->setRetprice(500);
 
 $order->addItem($item1);
 $order->addItem($item2);
 
-$apiBody->add($this->dalliOrder);
+$apiBody->add($order);
 
-if (!$dalliClient->sendApiRequest($apiBody->getAsXmlString()))
+$success = !$dalliClient->sendApiRequest($apiBody);
+if (!$success)
     foreach ($dalliClient->getErrors() as $error)
         echo $error;
+
+echo $dalliClient->getResponseBody();
 ```
 
 ### Очистка корзины
 
 ```php
-use floor12\DalliApi\Models\DalliApiBody;
+use floor12\DalliApi\DalliClient;
+use floor12\DalliApi\Enum\DalliApiEndpoint;
 use floor12\DalliApi\Enum\DalliApiMethod;
+use floor12\DalliApi\Models\DalliApiBody;
 
-$token = '<ваш token>';
-$apiBody = new DalliApiBody(DalliApiMethod::BASKET_CLEAR, $token);
+$token = 'your_token';
+$dalliClient = new DalliClient(DalliApiEndpoint::SPB, $token);
 
-if (!$dalliClient->sendApiRequest($apiBody->getAsXmlString()))
+$apiBody = new DalliApiBody(DalliApiMethod::BASKET_CLEAR);
+
+$success = $dalliClient->sendApiRequest($apiBody);
+
+if (!$success)
     foreach ($dalliClient->getErrors() as $error)
         echo $error;
+
+echo $dalliClient->getResponseBody();
 ```

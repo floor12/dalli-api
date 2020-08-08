@@ -5,12 +5,12 @@ use floor12\DalliApi\Enum\DalliApiEndpoint;
 use floor12\DalliApi\Enum\DalliApiMethod;
 use floor12\DalliApi\Models\DalliApiBody;
 
-$dalliClient = new DalliClient(DalliApiEndpoint::SPB);
+$token = 'your_token';
+$dalliClient = new DalliClient(DalliApiEndpoint::SPB, $token);
 
-$token = '';
-$apiBody = new DalliApiBody(DalliApiMethod::BASKET_CLEAR, $token);
+$apiBody = new DalliApiBody(DalliApiMethod::BASKET_CLEAR);
 
-$success = $dalliClient->sendApiRequest($apiBody->getAsXmlString());
+$success = $dalliClient->sendApiRequest($apiBody);
 
 if (!$success)
     foreach ($dalliClient->getErrors() as $error)

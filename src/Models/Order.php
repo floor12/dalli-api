@@ -126,7 +126,7 @@ class Order extends BaseXmlObject
      * @return Order
      * @return Order
      */
-    public function setUpsnak(string $upsnak)
+    public function setUpsnak(string $upsnak): self
     {
         $this->upsnak = $upsnak;
         return $this;
@@ -137,7 +137,7 @@ class Order extends BaseXmlObject
      * @return Order
      * @return Order
      */
-    public function setInstruction(string $instruction)
+    public function setInstruction(string $instruction): self
     {
         $this->instruction = $instruction;
         return $this;
@@ -148,7 +148,7 @@ class Order extends BaseXmlObject
      * @return Order
      * @return Order
      */
-    public function setDeliveryset(array $deliveryset)
+    public function setDeliveryset(array $deliveryset): self
     {
         $this->deliveryset = $deliveryset;
         return $this;
@@ -158,7 +158,7 @@ class Order extends BaseXmlObject
      * @param Below $below
      * @return Order
      */
-    public function addDeliveryset(Below $below)
+    public function addDeliveryset(Below $below): self
     {
         $this->deliveryset[] = $below;
         return $this;
@@ -169,7 +169,7 @@ class Order extends BaseXmlObject
      * @return Order
      * @return Order
      */
-    public function setItems(array $items)
+    public function setItems(array $items): self
     {
         $this->items = $items;
         return $this;
@@ -180,7 +180,7 @@ class Order extends BaseXmlObject
      * @return Order
      * @return Order
      */
-    public function addItem(Item $item)
+    public function addItem(Item $item): self
     {
         $this->items[] = $item;
         return $this;

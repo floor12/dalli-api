@@ -2,6 +2,8 @@
 
 namespace floor12\DalliApi;
 
+use floor12\DalliApi\Exceptions\EmptyTokenException;
+use floor12\DalliApi\Models\DalliApiBody;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -10,13 +12,9 @@ use Psr\Http\Message\ResponseInterface;
 
 class DalliClient
 {
-    /**
-     * @var ClientInterface
-     */
+    /** @var ClientInterface */
     private $client;
-    /**
-     * @var string
-     */
+    /** @var string */
     private $dalliEndpoint;
     /** @var array */
     private $errors = [];
@@ -24,16 +22,35 @@ class DalliClient
     private $response;
     /** @var string */
     private $responseBody;
+    /** @var string */
+    private $authToken;
 
     /**
      * DalliClient constructor.
      * @param string $dalliEndpoint
+     * @param string|null $authToken
      * @param ClientInterface|null $client
+     * @throws EmptyTokenException
      */
-    public function __construct(string $dalliEndpoint, ClientInterface $client = null)
+    public function __construct(string $dalliEndpoint, ?string $authToken, ClientInterface $client = null)
     {
+        if (empty($authToken))
+            throw new EmptyTokenException();
+
         $this->client = $client ?? new Client();
         $this->dalliEndpoint = $dalliEndpoint;
+        $this->authToken = $authToken;
+    }
+
+    /**
+     * @param DalliApiBody $bodyObject
+     * @return DalliApiBody
+     */
+    private function addAuthTokenToBody(DalliApiBody $bodyObject): DalliApiBody
+    {
+        $auth = $bodyObject->mainElement->addChild('auth');
+        $auth->addAttribute('token', $this->authToken);
+        return $bodyObject;
     }
 
     /**
@@ -42,28 +59,36 @@ class DalliClient
     private function parseErrors(): bool
     {
         $pattern = '/errorMessage=\'(.+)\'/';
-        if (preg_match_all($pattern, $this->responseBody, $matches)) {
-            $this->errors = $matches[1];
-            return false;
+        if (!preg_match_all($pattern, $this->responseBody, $matches)) {
+            return true;
         }
-        return true;
+        $this->errors = $matches[1];
+        if ($this->errors[0] === 'Успешно') {
+            $this->errors = [];
+            return true;
+        }
+        return false;
     }
 
     /**
-     * @param string $body Body as XML string
+     * @param DalliApiBody $bodyObject
      * @return boolean
      * @throws GuzzleException
      */
-    public function sendApiRequest(string $body): bool
+    public function sendApiRequest(DalliApiBody $bodyObject): bool
     {
+        $bodyObject = $this->addAuthTokenToBody($bodyObject);
         $headers = ['Content-type' => 'application/xml'];
-        $request = new Request('POST', $this->dalliEndpoint, $headers, $body);
+        $request = new Request('POST', $this->dalliEndpoint, $headers, $bodyObject->getAsXmlString());
         $this->response = $this->client->send($request);
-        $this->responseBody = $this->response->getBody()->getContents();
+        $this->responseBody = (clone $this->response)->getBody()->getContents();
         return $this->parseErrors();
     }
 
-    public function getErrors()
+    /**
+     * @return array
+     */
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -74,5 +99,13 @@ class DalliClient
     public function getResponseBody(): string
     {
         return $this->responseBody;
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function getResponse(): ResponseInterface
+    {
+        return $this->response;
     }
 }

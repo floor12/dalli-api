@@ -11,7 +11,7 @@ use SimpleXMLElement;
 abstract class BaseXmlObject
 {
     /**
-     * @param BaseXmlObject $object
+     * @param BaseXmlObject|null $object
      * @return SimpleXMLElement
      * @throws ReflectionException
      */
