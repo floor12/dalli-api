@@ -75,7 +75,6 @@ class DalliApiBodyTest extends TestCase
         $testMethodName = 'testMethod1';
         $apiBody = new DalliApiBody($testMethodName, [$paramName1 => [$paramName2 => $paramValue1]]);
         $resultXml = html_entity_decode($apiBody->getAsXmlString());
-        var_dump($resultXml);
         $this->assertStringContainsString("<{$paramName1}><{$paramName2}>{$paramValue1}</{$paramName2}></{$paramName1}>", $resultXml);
 
 

@@ -56,5 +56,14 @@ class ItemTest extends TestCase
         $this->assertStringContainsString("retprice=\"{$retprice}\"", $resultXml);
         $this->assertStringNotContainsString("barcode", $resultXml);
         $this->assertStringNotContainsString("article", $resultXml);
+        $this->assertStringNotContainsString("return", $resultXml);
+    }
+
+    public function testIsReturned()
+    {
+        $item = (new Item())->setReturn(true);
+        $this->assertTrue($item->isReturned());
+        $item->setReturn(false);
+        $this->assertFalse($item->isReturned());
     }
 }

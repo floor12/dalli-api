@@ -18,6 +18,8 @@ class Item extends BaseXmlObject
     public $_barcode;
     /** @var string */
     public $_article;
+    /** @var bool|null */
+    public $_return;
 
 
     /**
@@ -82,5 +84,20 @@ class Item extends BaseXmlObject
     {
         $this->title = $title;
         return $this;
+    }
+
+    /**
+     * @param bool $return
+     * @return self;
+     */
+    public function setReturn(bool $return): self
+    {
+        $this->_return = $return;
+        return $this;
+    }
+
+    public function isReturned(): bool
+    {
+        return $this->_return;
     }
 }
