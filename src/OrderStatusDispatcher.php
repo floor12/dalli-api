@@ -41,7 +41,7 @@ class OrderStatusDispatcher
 
     private function dispatchItemStatus()
     {
-        $pattern = '/<item.+barcode="(.+)" a.+returns="(\d)">/';
+        $pattern = '/<item.+barcode="(.+)" a.+returns="(\d)"/';
         if (preg_match_all($pattern, $this->xmlBody, $matches)) {
             for ($i = 0; $i < sizeof($matches[0]); $i++) {
                 $barcode = $matches[1][$i];
