@@ -59,7 +59,9 @@ class OrderStatusDispatcher
      */
     public function isItemReturned($barcode): ?bool
     {
-        return ($item = $this->items[$barcode]) ? $item->isReturned() : null;
+        if (isset($this->items[$barcode]))
+            return $this->items[$barcode]->isReturned();
+        return null;
     }
 
     public function getStatusId(): string
