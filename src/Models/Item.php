@@ -55,11 +55,11 @@ class Item extends BaseXmlObject
     }
 
     /**
-     * @param int $_barcode
+     * @param string $_barcode
      * @return Item
      * @return Item
      */
-    public function setBarcode(int $_barcode)
+    public function setBarcode(string $_barcode)
     {
         $this->_barcode = $_barcode;
         return $this;

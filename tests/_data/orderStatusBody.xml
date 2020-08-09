@@ -26,13 +26,9 @@
         <delivereddate/>
         <deliveredtime/>
         <items>
-            <item quantity="1" mass="0.10" retprice="0.00" VATrate="0" barcode="123" article="" returns="0">- Тестовая товарная позиция
-            </item>
-            <item quantity="2" mass="0.10" retprice="0.00" VATrate="0" barcode="323" article="" returns="0">- Тестовая товарная позиция 2
-            </item>
-            <item quantity="3" mass="0.10" retprice="0.00" VATrate="0" barcode="4234231" article="" returns="1" data="1">- Тестовая товарная
-                позиция 3
-            </item>
+            <item quantity="1" mass="0.10" retprice="0.00" VATrate="0" barcode="123" article="" returns="0">- Тестовая товарная позиция</item>
+            <item quantity="2" mass="0.10" retprice="0.00" VATrate="0" barcode="323" article="" returns="0">- Тестовая товарная позиция 2</item>
+            <item quantity="3" mass="0.10" retprice="0.00" VATrate="0" barcode="4234231" article="" returns="1" data="1">- Тестовая товарная позиция 3</item>
             <item quantity="1" mass="0.10" retprice="0.00" VATrate="0" barcode="" article="" returns="1">Доставка</item>
         </items>
     </order>
