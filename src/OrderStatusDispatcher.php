@@ -41,11 +41,13 @@ class OrderStatusDispatcher
 
     private function dispatchItemStatus()
     {
-        $pattern = '/<item.+barcode="(.+)" a.+returns="(\d)"/';
+        $pattern = '#<item.*?barcode="(.*?)".*?returns="(.*?)"#';
         if (preg_match_all($pattern, $this->xmlBody, $matches)) {
             $itemsCount = sizeof($matches[0]);
             for ($i = 0; $i < $itemsCount; $i++) {
                 $barcode = $matches[1][$i];
+                if (empty($barcode))
+                    continue;
                 $return = boolval($matches[2][$i]);
                 $this->items[$barcode] = (new Item())
                     ->setBarcode($barcode)
