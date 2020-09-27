@@ -43,6 +43,7 @@ class DalliOrderStatus extends SimpleEnum
         self::NEWPICKUP => 'Создан забор',
         self::UNCONFIRM => 'Не удалось согласовать доставку',
         self::PICKUPREADY => 'Готов к выдаче',
+        self::CANCELED => 'Отказ клиента',
     ];
 
 }

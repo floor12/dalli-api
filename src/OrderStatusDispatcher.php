@@ -8,6 +8,8 @@ use floor12\DalliApi\Models\Item;
 
 class OrderStatusDispatcher
 {
+    /** @var Item[] */
+    protected $items = [];
     /** @var string */
     private $xmlBody;
     /** @var int|null */
@@ -16,8 +18,6 @@ class OrderStatusDispatcher
     private $statusName;
     /** @var string|null */
     private $statusId;
-    /** @var Item[] */
-    protected $items = [];
 
     /**
      * @param string $xmlBody
