@@ -10,11 +10,11 @@ class OrderStatusDispatcher
 {
     /** @var string */
     private $xmlBody;
-    /** @var int */
+    /** @var int|null */
     private $statusTimestamp;
-    /** @var string */
+    /** @var string|null */
     private $statusName;
-    /** @var string */
+    /** @var string|null */
     private $statusId;
     /** @var Item[] */
     protected $items = [];
@@ -67,17 +67,17 @@ class OrderStatusDispatcher
         return null;
     }
 
-    public function getStatusId(): string
+    public function getStatusId(): ?string
     {
         return $this->statusId;
     }
 
-    public function getStatusName(): string
+    public function getStatusName(): ?string
     {
         return $this->statusName;
     }
 
-    public function getStatusTimestamp(): int
+    public function getStatusTimestamp(): ?int
     {
         return $this->statusTimestamp;
     }
