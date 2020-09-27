@@ -13,9 +13,9 @@ class OrderStatusDispatcherTest extends TestCase
     {
         $xmlBody = file_get_contents(__DIR__ . '/_data/orderStatusBody.xml');
         $dispatcher = new OrderStatusDispatcher($xmlBody);
-        $this->assertEquals(DalliOrderStatus::DEPARTURE, $dispatcher->getStatusId());
-        $this->assertEquals(DalliOrderStatus::getLabel(DalliOrderStatus::DEPARTURE), $dispatcher->getStatusName());
-        $this->assertEquals(strtotime('2017-10-25 13:51:28'), $dispatcher->getStatusTimestamp());
+        $this->assertEquals(DalliOrderStatus::COMPLETE, $dispatcher->getStatusId());
+        $this->assertEquals(DalliOrderStatus::getLabel(DalliOrderStatus::COMPLETE), $dispatcher->getStatusName());
+        $this->assertEquals(strtotime('2020-09-16 16:46:00'), $dispatcher->getStatusTimestamp());
     }
 
     public function testDispatchItemStatus()
