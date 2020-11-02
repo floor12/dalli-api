@@ -18,6 +18,8 @@ class OrderStatusDispatcher
     private $statusName;
     /** @var string|null */
     private $statusId;
+    /** @var string */
+    private $paymentType;
 
     /**
      * @param string $xmlBody
@@ -27,6 +29,7 @@ class OrderStatusDispatcher
         $this->xmlBody = $xmlBody;
         $this->dispatchOrderStatus();
         $this->dispatchItemStatus();
+        $this->dispatchPaymentType();
     }
 
     private function dispatchOrderStatus(): void
@@ -36,6 +39,14 @@ class OrderStatusDispatcher
             $this->statusId = $matches[4];
             $this->statusName = $matches[3];
             $this->statusTimestamp = strtotime($matches[1]);
+        }
+    }
+
+    private function dispatchPaymentType(): void
+    {
+        $pattern = '/<paytype>([A-Z]*)<\/paytype>/';
+        if (preg_match($pattern, $this->xmlBody, $matches)) {
+            $this->paymentType = $matches[1];
         }
     }
 
@@ -85,8 +96,16 @@ class OrderStatusDispatcher
     /**
      * @return Item[]
      */
-    public function getItems(): array
+    public function getReturnedItems(): array
     {
         return $this->items;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentType(): string
+    {
+        return $this->paymentType;
     }
 }

@@ -13,17 +13,17 @@ use Psr\Http\Message\ResponseInterface;
 class DalliClient
 {
     /** @var ClientInterface */
-    private $client;
+    protected $client;
     /** @var string */
-    private $dalliEndpoint;
+    protected $dalliEndpoint;
     /** @var array */
-    private $errors = [];
+    protected $errors = [];
     /** @var ResponseInterface */
-    private $response;
+    protected $response;
     /** @var string */
-    private $responseBody;
+    protected $responseBody;
     /** @var string */
-    private $authToken;
+    protected $authToken;
 
     /**
      * DalliClient constructor.
@@ -46,7 +46,7 @@ class DalliClient
      * @param DalliApiBody $bodyObject
      * @return DalliApiBody
      */
-    private function addAuthTokenToBody(DalliApiBody $bodyObject): DalliApiBody
+    protected function addAuthTokenToBody(DalliApiBody $bodyObject): DalliApiBody
     {
         $auth = $bodyObject->mainElement->addChild('auth');
         $auth->addAttribute('token', $this->authToken);
@@ -56,7 +56,7 @@ class DalliClient
     /**
      * @return bool
      */
-    private function parseErrors(): bool
+    protected function parseErrors(): bool
     {
         $pattern = '/errorMessage=\'(.+)\'/';
         if (!preg_match_all($pattern, $this->responseBody, $matches)) {
