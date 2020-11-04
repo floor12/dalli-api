@@ -20,6 +20,8 @@ class OrderStatusDispatcher
     private $statusId;
     /** @var string */
     private $paymentType;
+    /** @var string */
+    private $externalBarCode;
 
     /**
      * @param string $xmlBody
@@ -30,6 +32,7 @@ class OrderStatusDispatcher
         $this->dispatchOrderStatus();
         $this->dispatchItemStatus();
         $this->dispatchPaymentType();
+        $this->dispatchExternalBarCode();
     }
 
     private function dispatchOrderStatus(): void
@@ -47,6 +50,14 @@ class OrderStatusDispatcher
         $pattern = '/<paytype>([A-Z]*)<\/paytype>/';
         if (preg_match($pattern, $this->xmlBody, $matches)) {
             $this->paymentType = $matches[1];
+        }
+    }
+
+    private function dispatchExternalBarCode(): void
+    {
+        $pattern = '/<outstrbarcode>([A-Z0-9]*)<\/outstrbarcode>/';
+        if (preg_match($pattern, $this->xmlBody, $matches)) {
+            $this->externalBarCode = $matches[1];
         }
     }
 
@@ -107,5 +118,13 @@ class OrderStatusDispatcher
     public function getPaymentType(): string
     {
         return $this->paymentType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalBarCode(): string
+    {
+        return $this->externalBarCode;
     }
 }
