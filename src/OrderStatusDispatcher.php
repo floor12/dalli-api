@@ -121,9 +121,9 @@ class OrderStatusDispatcher
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getExternalBarCode(): string
+    public function getExternalBarCode(): ?string
     {
         return $this->externalBarCode;
     }
