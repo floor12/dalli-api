@@ -10,6 +10,8 @@ class Receiver extends BaseXmlObject
     /** @var string */
     public $address;
     /** @var string */
+    public $pvzcode;
+    /** @var string */
     public $person;
     /** @var string */
     public $phone;
@@ -41,6 +43,17 @@ class Receiver extends BaseXmlObject
     public function setAddress(string $address)
     {
         $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @param string $pvzCode
+     * @return Receiver
+     * @return Receiver
+     */
+    public function setPvzCode(string $pvzCode)
+    {
+        $this->pvzcode = $pvzCode;
         return $this;
     }
 
