@@ -16,6 +16,7 @@ class OrderStatusDispatcherTest extends TestCase
         $this->assertEquals(DalliOrderStatus::COMPLETE, $dispatcher->getStatusId());
         $this->assertEquals(DalliOrderStatus::getLabel(DalliOrderStatus::COMPLETE), $dispatcher->getStatusName());
         $this->assertEquals(strtotime('2020-09-16 16:46:00'), $dispatcher->getStatusTimestamp());
+        $this->assertEquals('Заявка отменена', $dispatcher->getDeliveredTo());
     }
 
     public function testDispatchItemStatus()

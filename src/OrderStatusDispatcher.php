@@ -21,6 +21,8 @@ class OrderStatusDispatcher
     /** @var string */
     private $paymentType;
     /** @var string */
+    private $deliveredTo;
+    /** @var string */
     private $externalBarCode;
 
     /**
@@ -28,11 +30,13 @@ class OrderStatusDispatcher
      */
     public function __construct(string $xmlBody)
     {
+        echo $xmlBody;
         $this->xmlBody = $xmlBody;
         $this->dispatchOrderStatus();
         $this->dispatchItemStatus();
         $this->dispatchPaymentType();
         $this->dispatchExternalBarCode();
+        $this->dispatchDeliveredTo();
     }
 
     private function dispatchOrderStatus(): void
@@ -42,6 +46,14 @@ class OrderStatusDispatcher
             $this->statusId = $matches[4];
             $this->statusName = $matches[3];
             $this->statusTimestamp = strtotime($matches[1]);
+        }
+    }
+
+    private function dispatchDeliveredTo(): void
+    {
+        $pattern = '/<deliveredto>(.+)<\/deliveredto>/';
+        if (preg_match($pattern, $this->xmlBody, $matches)) {
+            $this->deliveredTo = $matches[1];
         }
     }
 
@@ -118,6 +130,14 @@ class OrderStatusDispatcher
     public function getPaymentType(): string
     {
         return $this->paymentType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliveredTo(): ?string
+    {
+        return $this->deliveredTo;
     }
 
     /**
