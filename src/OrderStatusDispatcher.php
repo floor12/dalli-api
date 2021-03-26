@@ -30,7 +30,6 @@ class OrderStatusDispatcher
      */
     public function __construct(string $xmlBody)
     {
-        echo $xmlBody;
         $this->xmlBody = $xmlBody;
         $this->dispatchOrderStatus();
         $this->dispatchItemStatus();
