@@ -12,7 +12,7 @@ class Item extends BaseXmlObject
     public $_quantity = 1;
     /** @var float */
     public $_weight;
-    /** @var int */
+    /** @var float */
     public $_retprice;
     /** @var int */
     public $_barcode;
@@ -44,11 +44,11 @@ class Item extends BaseXmlObject
     }
 
     /**
-     * @param int $retprice
+     * @param float $retprice
      * @return Item
      * @return Item
      */
-    public function setRetprice(int $retprice)
+    public function setRetprice(float $retprice)
     {
         $this->_retprice = $retprice;
         return $this;
