@@ -20,6 +20,8 @@ class Item extends BaseXmlObject
     public $_article;
     /** @var bool|null */
     public $_return;
+    /** @var string|null */
+    public $_governmentCode;
 
 
     /**
@@ -102,5 +104,17 @@ class Item extends BaseXmlObject
     public function isReturned(): ?bool
     {
         return $this->_return;
+    }
+
+    /**
+     * @param string $code
+     * @return self;
+     */
+    public function setGovernmentCode(string $code): self
+    {
+        if ($code) {
+            $this->_governmentCode = $code;
+        }
+        return $this;
     }
 }
