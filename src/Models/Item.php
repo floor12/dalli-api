@@ -110,7 +110,7 @@ class Item extends BaseXmlObject
      * @param string $code
      * @return self;
      */
-    public function setGovernmentCode(string $code): self
+    public function setGovernmentCode(?string $code): self
     {
         if ($code) {
             $this->_governmentCode = $code;
