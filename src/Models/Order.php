@@ -6,7 +6,7 @@ namespace floor12\DalliApi\Models;
 
 class Order extends BaseXmlObject
 {
-    /** @var int */
+    /** @var string */
     public $_number;
     /** @var Receiver */
     public $receiver;
@@ -191,7 +191,7 @@ class Order extends BaseXmlObject
      * @return Order
      * @return Order
      */
-    public function setNumber(int $_number): self
+    public function setNumber(string $_number): self
     {
         $this->_number = $_number;
         return $this;
