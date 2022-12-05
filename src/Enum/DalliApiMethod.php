@@ -16,5 +16,6 @@ class DalliApiMethod
     const ORDER_STATUS = 'statusreq';
     const SERVICES_LIST = 'services';
     const PVZ_LIST = 'pvzlist';
+    const POINTS_INFO = 'pointsInfo';
     const DELIVERY_COST = 'deliverycost';
 }
