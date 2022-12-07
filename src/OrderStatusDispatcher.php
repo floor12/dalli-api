@@ -45,22 +45,24 @@ class OrderStatusDispatcher
         $this->xml = simplexml_load_string($xmlBody);
         if ($this->xml === false)
             throw new Exception('XML body is not valid.');
+        if ($this->xml->order) {
 
-        foreach ($this->xml->order->statushistory->status as $statusItem) {
-            $this->statuses[] = new DalliOrderStatusEvent(
-                trim($statusItem[0]),
-                $statusItem['eventstore'],
-                strtotime($statusItem['eventtime']));
-        }
+            foreach ($this->xml->order->statushistory->status as $statusItem) {
+                $this->statuses[] = new DalliOrderStatusEvent(
+                    trim($statusItem[0]),
+                    $statusItem['eventstore'],
+                    strtotime($statusItem['eventtime']));
+            }
 
 
-        foreach ($this->xml->order->items->item as $item) {
-            $orderItem = new Item();
-            $orderItem->setBarcode((string)$item['barcode'])
-                ->setQuantity((int)$item['quantity'])
-                ->setReturn(boolval($item['returns']))
-                ->setRetprice((float)$item['retprice']);
-            $this->items[] = $orderItem;
+            foreach ($this->xml->order->items->item as $item) {
+                $orderItem = new Item();
+                $orderItem->setBarcode((string)$item['barcode'])
+                    ->setQuantity((int)$item['quantity'])
+                    ->setReturn(boolval($item['returns']))
+                    ->setRetprice((float)$item['retprice']);
+                $this->items[] = $orderItem;
+            }
         }
     }
 
@@ -93,7 +95,7 @@ class OrderStatusDispatcher
     public function getStatusTimestamp(): ?int
     {
         if ($this->statuses) {
-            return $this->statuses[0]->getTimestemp();
+            return $this->statuses[0]->getTimestamp();
         }
         return null;
     }
@@ -119,5 +121,15 @@ class OrderStatusDispatcher
     public function getOrderHistory(): ?array
     {
         return $this->statuses;
+    }
+
+    public function getStatuses(): array
+    {
+        return $this->statuses;
+    }
+
+    public function getExternalBarCode()
+    {
+        return $this->externalBarCode;
     }
 }
