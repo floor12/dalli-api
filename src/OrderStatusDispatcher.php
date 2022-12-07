@@ -54,14 +54,13 @@ class OrderStatusDispatcher
                     strtotime($statusItem['eventtime']));
             }
 
-
             foreach ($this->xml->order->items->item as $item) {
                 $orderItem = new Item();
                 $orderItem->setBarcode((string)$item['barcode'])
                     ->setQuantity((int)$item['quantity'])
                     ->setReturn(boolval($item['returns']))
                     ->setRetprice((float)$item['retprice']);
-                $this->items[] = $orderItem;
+                $this->items[$orderItem->_barcode] = $orderItem;
             }
         }
     }
