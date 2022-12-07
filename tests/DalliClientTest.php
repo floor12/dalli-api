@@ -42,7 +42,7 @@ class DalliClientTest extends TestCase
         /** @var Request $request */
         $request = $container[0]['request'];
         $this->assertEquals($testEndpoint, $request->getUri());
-        $this->assertContains($testToken, $request->getBody()->getContents());
+        $this->stringContains($testToken, $request->getBody()->getContents());
         $this->assertEquals('application/xml', $request->getHeader('Content-type')[0]);
     }
 

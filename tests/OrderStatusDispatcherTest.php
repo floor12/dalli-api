@@ -9,14 +9,19 @@ use PHPUnit\Framework\TestCase;
 class OrderStatusDispatcherTest extends TestCase
 {
 
-    public function testDispatchOrderStatus()
+    public function testStatusHistory()
     {
         $xmlBody = file_get_contents(__DIR__ . '/_data/orderStatusBody.xml');
         $dispatcher = new OrderStatusDispatcher($xmlBody);
-        $this->assertEquals(DalliOrderStatus::COMPLETE, $dispatcher->getStatusId());
-        $this->assertEquals(DalliOrderStatus::getLabel(DalliOrderStatus::COMPLETE), $dispatcher->getStatusName());
-        $this->assertEquals(strtotime('2020-09-16 16:46:00'), $dispatcher->getStatusTimestamp());
-        $this->assertEquals('Заявка отменена', $dispatcher->getDeliveredTo());
+        $history = $dispatcher->getOrderHistory();
+        $this->assertTrue(is_array($history));
+        $this->assertTrue(count($history) === 5);
+        $this->assertEquals($history[0]->getStatusId(), DalliOrderStatus::COMPLETE);
+        $this->assertEquals($history[1]->getStatusId(), DalliOrderStatus::DEPARTURE);
+        $this->assertEquals($history[2]->getStatusId(), DalliOrderStatus::DEPARTURING);
+        $this->assertEquals($history[3]->getStatusId(), DalliOrderStatus::ACCEPTED);
+        $this->assertEquals($history[4]->getStatusId(), DalliOrderStatus::NEW);
+
     }
 
     public function testDispatchItemStatus()
@@ -25,12 +30,6 @@ class OrderStatusDispatcherTest extends TestCase
         $dispatcher = new OrderStatusDispatcher($xmlBody);
         $items = $dispatcher->getItems();
         $this->assertEquals(3, sizeof($items));
-        $this->assertFalse($items['123']->isReturned());
-        $this->assertFalse($items['323']->isReturned());
-        $this->assertTrue($items['4234231']->isReturned());
-        $this->assertFalse($dispatcher->isItemReturned('123'));
-        $this->assertFalse($dispatcher->isItemReturned('323'));
-        $this->assertTrue($dispatcher->isItemReturned('4234231'));
-        $this->assertNull($dispatcher->isItemReturned('asdsas'));
+        $this->assertEquals(1, sizeof($dispatcher->getReturnedItems()));
     }
 }

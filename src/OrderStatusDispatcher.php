@@ -4,7 +4,10 @@
 namespace floor12\DalliApi;
 
 
+use Exception;
+use floor12\DalliApi\Enum\DalliOrderStatus;
 use floor12\DalliApi\Models\Item;
+use floor12\DalliApi\Models\Response\DalliOrderStatusEvent;
 
 class OrderStatusDispatcher
 {
@@ -24,68 +27,40 @@ class OrderStatusDispatcher
     private $deliveredTo;
     /** @var string */
     private $externalBarCode;
+    /**
+     * @var \$1|false|\SimpleXMLElement
+     */
+    private $xml;
+    /**
+     * @var DalliOrderStatusEvent[]
+     */
+    private $statuses;
 
     /**
      * @param string $xmlBody
+     * @throws Exception
      */
     public function __construct(string $xmlBody)
     {
-        $this->xmlBody = $xmlBody;
-        $this->dispatchOrderStatus();
-        $this->dispatchItemStatus();
-        $this->dispatchPaymentType();
-        $this->dispatchExternalBarCode();
-        $this->dispatchDeliveredTo();
-    }
+        $this->xml = simplexml_load_string($xmlBody);
+        if ($this->xml === false)
+            throw new Exception('XML body is not valid.');
 
-    private function dispatchOrderStatus(): void
-    {
-        $pattern = '/<status eventtime="(.+)" createtimegmt="(.+)" title="(.+)">([A-Z]*)<\/status>[\s]*(<d|<statushis)/';
-        if (preg_match($pattern, $this->xmlBody, $matches)) {
-            $this->statusId = $matches[4];
-            $this->statusName = $matches[3];
-            $this->statusTimestamp = strtotime($matches[1]);
+        foreach ($this->xml->order->statushistory->status as $statusItem) {
+            $this->statuses[] = new DalliOrderStatusEvent(
+                trim($statusItem[0]),
+                $statusItem['eventstore'],
+                strtotime($statusItem['eventtime']));
         }
-    }
 
-    private function dispatchDeliveredTo(): void
-    {
-        $pattern = '/<deliveredto>(.+)<\/deliveredto>/';
-        if (preg_match($pattern, $this->xmlBody, $matches)) {
-            $this->deliveredTo = $matches[1];
-        }
-    }
 
-    private function dispatchPaymentType(): void
-    {
-        $pattern = '/<paytype>([A-Z]*)<\/paytype>/';
-        if (preg_match($pattern, $this->xmlBody, $matches)) {
-            $this->paymentType = $matches[1];
-        }
-    }
-
-    private function dispatchExternalBarCode(): void
-    {
-        $pattern = '/<outstrbarcode>([A-Z0-9]*)<\/outstrbarcode>/';
-        if (preg_match($pattern, $this->xmlBody, $matches)) {
-            $this->externalBarCode = $matches[1];
-        }
-    }
-
-    private function dispatchItemStatus()
-    {
-        $pattern = '#barcode="(\d+)" returns="(\d+)"#';
-        if (preg_match_all($pattern, $this->xmlBody, $matches)) {
-            $itemsCount = sizeof($matches[0]);
-            for ($i = 0; $i < $itemsCount; $i++) {
-                $barcode = $matches[1][$i];
-                if (empty($barcode))
-                    continue;
-                $return = boolval($matches[2][$i]);
-                $this->items[$barcode] = (new Item())
-                    ->setBarcode($barcode)
-                    ->setReturn($return);
-            }
+        foreach ($this->xml->order->items->item as $item) {
+            $orderItem = new Item();
+            $orderItem->setBarcode((string)$item['barcode'])
+                ->setQuantity((int)$item['quantity'])
+                ->setReturn(boolval($item['returns']))
+                ->setRetprice((float)$item['retprice']);
+            $this->items[] = $orderItem;
         }
     }
 
@@ -102,17 +77,30 @@ class OrderStatusDispatcher
 
     public function getStatusId(): ?string
     {
-        return $this->statusId;
+        if ($this->statuses) {
+            return $this->statuses[0]->getStatusId();
+        }
+        return null;
     }
 
     public function getStatusName(): ?string
     {
-        return $this->statusName;
+        if ($this->getStatusId())
+            DalliOrderStatus::getLabel($this->getStatusId());
+        return null;
     }
 
     public function getStatusTimestamp(): ?int
     {
-        return $this->statusTimestamp;
+        if ($this->statuses) {
+            return $this->statuses[0]->getTimestemp();
+        }
+        return null;
+    }
+
+    public function getItems(): array
+    {
+        return $this->items;
     }
 
     /**
@@ -120,30 +108,16 @@ class OrderStatusDispatcher
      */
     public function getReturnedItems(): array
     {
-        return $this->items;
+        $returned = [];
+        foreach ($this->items as $item) {
+            if ($item->isReturned())
+                $returned[] = $item;
+        }
+        return $returned;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentType(): string
+    public function getOrderHistory(): ?array
     {
-        return $this->paymentType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDeliveredTo(): ?string
-    {
-        return $this->deliveredTo;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getExternalBarCode(): ?string
-    {
-        return $this->externalBarCode;
+        return $this->statuses;
     }
 }
