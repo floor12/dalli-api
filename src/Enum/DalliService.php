@@ -21,4 +21,7 @@ class DalliService
     const PVZ_PICKPOINT = 15;
     const EXPRESS_PICKUP = 16;
     const FIRST_MILE_PLUS = 17;
+    const PERVAYA_MILYA = 18;
+    const POCHTA_RUS = 19;
+    const PVZ_5POST = 20;
 }
