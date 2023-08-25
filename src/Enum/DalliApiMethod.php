@@ -18,4 +18,5 @@ class DalliApiMethod
     const PVZ_LIST = 'pvzlist';
     const POINTS_INFO = 'pointsInfo';
     const DELIVERY_COST = 'deliverycost';
+    const DELIVERY_INTERVALS = 'intervals';
 }
