@@ -18,13 +18,16 @@ class DalliApiBody extends BaseXmlObject
     /** @var array|null */
     private $params;
 
+    public $user_id;
+    public $order_id;
+
     /**
      * DalliApiBody constructor.
      * @param string|null $apiMethodName
      * @param array|null $params
      * @throws EmptyApiMethodException
      */
-    public function __construct(?string $apiMethodName, ?array $params = [])
+    public function __construct(?string $apiMethodName, ?array $params = [], ?int $user_id = null, ?int $order_id = null)
     {
         if (empty($apiMethodName))
             throw new EmptyApiMethodException();
@@ -32,6 +35,8 @@ class DalliApiBody extends BaseXmlObject
         $this->apiMethodName = $apiMethodName;
         $this->mainElement = new SimpleXMLElement("<$this->apiMethodName></$this->apiMethodName>");
         $this->params = $params;
+        $this->user_id = $user_id;
+        $this->order_id = $order_id;
         $this->parseParamsToXml();
     }
 
